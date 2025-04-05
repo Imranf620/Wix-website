@@ -1,0 +1,100 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/webfonts/fa-solid-900.woff2') format('woff2');
+  font-display: swap;
+}
+
+
+/* ---------------------------------Prevent horizontal scrolling -----------------------*/
+html,
+body {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+/*  -------------------------------hero section --------------------------------------- */
+/* -----------freelancing section---------  */
+.freelance-section {
+  height: 300px;
+  width: 100%;
+  background-image: url(pictures/d7f019a0e0ef4cfb83f63dab7b09ecfe.avif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Container ko responsive banane ke liye */
+.freelance-section-div {
+  height: 100%;
+  width: 76%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Button ko responsive banane ke liye */
+.freelance-section .btn {
+  background: #283b62;
+  padding: 60px;
+  font-size: 34px;
+  font-weight: 700;
+  text-align: center;
+
+  width: 70%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .freelance-section {
+    height: 250px;
+    background-size: cover;
+  }
+
+  .freelance-section-div {
+    width: 70%;
+  }
+
+  .freelance-section .btn {
+    padding: 35px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .freelance-section {
+    height: 200px;
+  }
+
+  .freelance-section-div {
+    width: 80%;
+  }
+
+  .freelance-section .btn {
+    padding: 30px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .freelance-section {
+    height: 180px;
+  }
+
+  .freelance-section-div {
+    width: 100%;
+  }
+
+  .freelance-section .btn {
+    padding: 16px;
+    font-size: 18px;
+  }
+}
+/* -----------------------------------unser section css------------------------------- */
+.custom-container {
+      width: 90%;
+  }
+  @media (min-width: 768px) {
+      .custom-container {
+          width: 80%;
+      }
+  }
+

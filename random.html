@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Page</title>
+  <link rel="stylesheet" href="output.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+
+  <!-- Navbar placeholder -->
+  <div id="navbar-placeholder"></div>
+
+  <h1>565</h1>
+  <p class="flex items-center space-x-2 text-white">
+    Drop Up
+    <span class="text-xl">&#8593;</span> <!-- Up Arrow -->
+  </p>
+
+  <!-- Hero Section will be loaded here -->
+<!-- <div id="hero-section-placeholder"></div>
+
+  <div id="footer-placeholder"></div>
+   Scroll to top will be loaded here -->
+<div id="scrollToTop-placeholder"></div>
+
+
+
+  <script>
+    function loadNavbar() {
+      fetch("navbar.html")
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("navbar-placeholder").innerHTML = data;
+
+          // Wait for navbar to load, then initialize its JS
+          const script = document.createElement("script");
+          script.src = "script.js";
+          document.body.appendChild(script);
+        })
+        .catch(error => console.error("Error loading navbar:", error));
+    }
+
+    document.addEventListener("DOMContentLoaded", loadNavbar);
+
+    function loadFooter() {
+      fetch("footer.html")  // Path to your footer.html file
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        })
+        .catch(error => console.error("Error loading footer:", error));
+    }
+
+    document.addEventListener("DOMContentLoaded", loadFooter);
+    function loadScrollToTop() {
+  fetch("scrollToTop.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("scrollToTop-placeholder").innerHTML = data;
+    })
+    .catch(error => console.error("Error loading scrollToTop:", error));
+}
+
+document.addEventListener("DOMContentLoaded", loadScrollToTop);
+function loadHeroSection(customText) {
+  fetch("beta-hero.html")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("hero-section-placeholder").innerHTML = data;
+
+      // After loading the HTML, set the dynamic text
+      const heroText = document.getElementById("heroText");
+      if (heroText) {
+        heroText.textContent = customText;
+      }
+    })
+    .catch(error => console.error("Error loading hero section:", error));
+}
+
+// Example usage: call this when DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  loadHeroSection("Unternehmen"); // You can pass "Services", "Kontakt", etc.
+});
+
+
+  </script>
+
+</body>
+</html>
