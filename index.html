@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Responsive Navbar</title>
-    <!-- <script defer src="https://cdn.tailwindcss.com"></script> -->
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="pictures/11062b_d21ff9e8cce1426fbd4f218f64fe884df000.avif" as="image" fetchpriority="high" />
+    <link rel="preload" href="pictures/Gepard_Immobilien.avif" as="image" fetchpriority="high" />
+    
+    <!-- Font Awesome with preload -->
     <link
       rel="preload"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -32,23 +37,39 @@
     />
     <noscript><link rel="stylesheet" href="style.css" /></noscript>
   </head>
-  <body class="">
+  <body>
     <!-- Navbar placeholder -->
     <div id="navbar-placeholder"></div>
 
+    <!-- Hero section with optimized video -->
     <section class="relative mt-[120px] h-[100vh] w-full overflow-hidden">
-      <!-- Background Video -->
-      <video
-        class="absolute top-0 left-0 w-full h-full object-cover"
-        autoplay
-        loop
-        muted
-        width="1920"
-        height="1080"
-        poster="pictures/11062b_d21ff9e8cce1426fbd4f218f64fe884df000.avif"
-      >
-        <source src="pictures/hero-video.mp4" type="video/mp4" />
-      </video>
+      <!-- Background Video with optimizations -->
+      <div class="absolute top-0 left-0 w-full h-full">
+        <!-- High-quality poster image that loads immediately -->
+        <img 
+          src="pictures/11062b_d21ff9e8cce1426fbd4f218f64fe884df000.avif"
+          alt="Hero Background"
+          class="absolute top-0 left-0 w-full h-full object-cover"
+          fetchpriority="high"
+          width="1920"
+          height="1080"
+        />
+        <!-- Video that loads after critical content -->
+        <video
+          id="hero-video"
+          class="absolute top-0 left-0 w-full h-full object-cover opacity-0 transition-opacity duration-300"
+          autoplay
+          loop
+          muted
+          playsinline
+          width="1920"
+          height="1080"
+          preload="none"
+        >
+          <source src="pictures/hero-video.mp4" type="video/mp4" />
+        </video>
+      </div>
+      
       <!-- Centered Text -->
       <div
         class="absolute inset-0 z-10 flex flex-col items-center justify-center text-white text-center px-4"
@@ -56,18 +77,13 @@
         <h1 class="text-5xl md:text-6xl font-bold">GEPARD Immobilien GmbH</h1>
         <h2 class="text-4xl md:text-5xl font-bold mt-2">Frankfurt</h2>
       </div>
+      
       <!-- Top Right Contact Box -->
       <div
-        class="bg-[#1e3054] absolute top-0 right-6  bg-opacity-50 flex gap-[15px] items-center justify-center text-center text-white w-[200px] md:w-[350px] h-[70px] md:h-[80px] px-[10px]"
+        class="bg-[#1e3054] absolute top-0 right-6 bg-opacity-50 flex gap-[15px] items-center justify-center text-center text-white w-[200px] md:w-[350px] h-[70px] md:h-[80px] px-[10px]"
       >
-      <i class="fa-solid fa-phone" style="color: white; font-size: 20px; font-weight: semibold">
-
-      </i>
-        <h1
-          class="text-[10px]  bg-opacity-95 md:text-[15px] font-normal"
-        >
-
-
+        <i class="fa-solid fa-phone" style="color: white; font-size: 20px; font-weight: semibold"></i>
+        <h1 class="text-[10px] bg-opacity-95 md:text-[15px] font-normal">
           Rufen Sie an! +49 69 21 99 55 02
         </h1>
       </div>
@@ -137,13 +153,10 @@
             Immobilien - Finanzierung
           </div>
           <button class="mt-8 bg-white text-gray-900 px-6 py-[0px] rounded-full text-lg font-semibold hover:bg-gray-300">
-            <a href="LeistunServicerview.html"
-
-          >
-            Mehr Informationen
-          </a>
+            <a href="LeistunServicerview.html">
+              Mehr Informationen
+            </a>
           </button>
-
         </div>
       </section>
     </div>
@@ -162,43 +175,64 @@
     <div id="scrollToTop-placeholder"></div>
 
     <script>
-      function loadNavbar() {
-        fetch("navbar.html")
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("navbar-placeholder").innerHTML = data;
+      // Optimized component loading
+      document.addEventListener("DOMContentLoaded", function() {
+        // Load all components in order of importance
+        Promise.all([
+          loadComponent("navbar", "navbar.html", "navbar-placeholder"),
+          loadComponent("footer", "footer.html", "footer-placeholder"),
+          loadComponent("scrollToTop", "scrollToTop.html", "scrollToTop-placeholder")
+        ]).then(() => {
+          // After all components are loaded, initialize navbar script
+          const script = document.createElement("script");
+          script.src = "script.js";
+          document.body.appendChild(script);
+          
+          // Then handle video loading
+          if (window.requestIdleCallback) {
+            requestIdleCallback(loadHeroVideo);
+          } else {
+            setTimeout(loadHeroVideo, 1000);
+          }
+        });
+      });
 
-            // Wait for navbar to load, then initialize its JS
-            const script = document.createElement("script");
-            script.src = "script.js";
-            document.body.appendChild(script);
+      // Function to load a component
+      function loadComponent(name, url, targetId) {
+        return fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById(targetId).innerHTML = data;
+            return name; // Return component name for tracking
           })
-          .catch((error) => console.error("Error loading navbar:", error));
+          .catch(error => {
+            console.error(`Error loading ${name}:`, error);
+            return null;
+          });
       }
-
-      document.addEventListener("DOMContentLoaded", loadNavbar);
-
-      function loadFooter() {
-        fetch("footer.html") // Path to your footer.html file
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("footer-placeholder").innerHTML = data;
-          })
-          .catch((error) => console.error("Error loading footer:", error));
+      
+      // Function to load hero video
+      function loadHeroVideo() {
+        const video = document.getElementById('hero-video');
+        
+        if (video) {
+          // Change preload attribute
+          video.preload = "auto";
+          
+          // Start loading the video
+          video.load();
+          
+          // Show video with fade-in once it can play
+          video.addEventListener('canplay', function() {
+            video.classList.replace('opacity-0', 'opacity-100');
+          });
+          
+          // Fallback in case canplay doesn't fire
+          setTimeout(function() {
+            video.classList.replace('opacity-0', 'opacity-100');
+          }, 2000);
+        }
       }
-
-      document.addEventListener("DOMContentLoaded", loadFooter);
-      function loadScrollToTop() {
-        fetch("scrollToTop.html")
-          .then((response) => response.text())
-          .then((data) => {
-            document.getElementById("scrollToTop-placeholder").innerHTML = data;
-          })
-          .catch((error) => console.error("Error loading scrollToTop:", error));
-      }
-
-      document.addEventListener("DOMContentLoaded", loadScrollToTop);
     </script>
-    <!-- <script src="script.js"></script> -->
   </body>
 </html>
