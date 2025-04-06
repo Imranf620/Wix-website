@@ -16,6 +16,7 @@ body {
 .freelance-section {
   height: 300px;
   width: 100%;
+  background-color: #dbeafe; /* light blue fallback */
   background-image: url(pictures/d7f019a0e0ef4cfb83f63dab7b09ecfe.avif);
   background-repeat: no-repeat;
   background-size: cover;

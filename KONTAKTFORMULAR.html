@@ -13,6 +13,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="preload" href="pictures/d7f019a0e0ef4cfb83f63dab7b09ecfe.avif" as="image" type="image/avif">
 
 
   </head>
@@ -22,7 +23,16 @@
   <div id="navbar-placeholder"></div>
 
   <!-- Hero Section will be loaded here -->
-<div id="hero-section-placeholder"></div>
+<!-- <div id="hero-section-placeholder"></div> -->
+ <!-- hero section directly here instead of fetching -->
+<section class="section mt-[120px] freelance-section relative">
+  <div class="freelance-section-div flex justify-center items-center">
+    <p class="btn bg-[#283B62] text-white" id="heroText">
+      Kontakt
+    </p>
+  </div>
+</section>
+
 
 
     <!-- ------------------form------------------ -->
@@ -178,25 +188,25 @@
 }
 
 document.addEventListener("DOMContentLoaded", loadScrollToTop);
-function loadHeroSection(customText) {
-  fetch("beta-hero.html")
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("hero-section-placeholder").innerHTML = data;
+// function loadHeroSection(customText) {
+//   fetch("beta-hero.html")
+//     .then(response => response.text())
+//     .then(data => {
+//       document.getElementById("hero-section-placeholder").innerHTML = data;
 
-      // After loading the HTML, set the dynamic text
-      const heroText = document.getElementById("heroText");
-      if (heroText) {
-        heroText.textContent = customText;
-      }
-    })
-    .catch(error => console.error("Error loading hero section:", error));
-}
+//       // After loading the HTML, set the dynamic text
+//       const heroText = document.getElementById("heroText");
+//       if (heroText) {
+//         heroText.textContent = customText;
+//       }
+//     })
+//     .catch(error => console.error("Error loading hero section:", error));
+// }
 
-// Example usage: call this when DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
-  loadHeroSection("Kontakt"); // You can pass "Services", "Kontakt", etc.
-});
+// // Example usage: call this when DOM is ready
+// document.addEventListener("DOMContentLoaded", () => {
+//   loadHeroSection("Kontakt"); // You can pass "Services", "Kontakt", etc.
+// });
 
 
   </script>
